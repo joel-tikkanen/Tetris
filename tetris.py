@@ -1,3 +1,4 @@
+import pygame as pg
 from constants import *
 
 tetrominos = [
@@ -33,17 +34,48 @@ tetrominos = [
     ]
 ]
 
-board = [[EMPTY for row in range(10)] for column in range(24)]
+
+# Create board with borders
+
+board = []
+
+for square in range(0, PIXELS+1):
+    if (square+1) % 12 == 0:
+        board.append(GREY)
+    elif square % 12 == 0:
+        board.append(GREY)
+    elif square >= PIXELS-ORIGINAL_RES[0]:
+        board.append(GREY)
+    else:
+        board.append(EMPTY)
+
 
 game_on = True
 score = 0
 
-while game_on:
-    pass
+screen = pg.display.set_mode(RES)
+clock = pg.time.Clock()
+
+pg.display.set_caption("Tetris")
+
+
+def run():
+    pg.init()
+    while game_on:
+        pg.display.flip()
+        clock.tick(FPS)
+        screen.fill(EMPTY)
+        draw_board()
 
 
 def draw_board():
-    pass
+    x, y = 0, 0
+    for square_index in range(0, len(board)):
+        pg.draw.rect(screen, board[square_index], pg.Rect((x, y), SQUARE_SIZE))
+        x += SQUARE_SIDE
+        if (square_index+1) % 12 == 0 and square_index != 0:
+            y += SQUARE_SIDE
+            x = 0
 
 
 def rotate():
@@ -59,4 +91,12 @@ def collisions():
 
 
 def lines():
+    pass
+
+
+def user_input():
+    pass
+
+
+def new_tetromino():
     pass
