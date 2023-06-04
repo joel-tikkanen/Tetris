@@ -72,6 +72,7 @@ def draw_board():
     x, y = 0, 0
     for square_index in range(0, len(board)):
         pg.draw.rect(screen, board[square_index], pg.Rect((x, y), SQUARE_SIZE))
+        pg.draw.rect(screen, EMPTY, pg.Rect((x, y), SQUARE_SIZE), 1)
         x += SQUARE_SIDE
         if (square_index + 1) % 12 == 0 and square_index != 0:
             y += SQUARE_SIDE
