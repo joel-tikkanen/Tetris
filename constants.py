@@ -5,11 +5,126 @@ ORANGE = (255, 127, 0)
 GREEN = (0, 255, 0)
 GREY = (127, 127, 127)
 EMPTY = (0, 0, 0)
+
 BOARD_WIDTH, BOARD_HEIGHT = 12, 26
 PIXELS = BOARD_WIDTH * BOARD_HEIGHT
 SCALE = 30
 RES = BOARD_WIDTH * SCALE, BOARD_HEIGHT * SCALE
-FPS = 2
+FPS = 20
 SQUARE_SIDE = SCALE
 SQUARE_SIZE = (SQUARE_SIDE, SQUARE_SIDE)
 SQUARE_BORDER = 10
+
+blue = [
+    [
+        BLUE, BLUE, BLUE, BLUE,
+        EMPTY, EMPTY, EMPTY, EMPTY,
+        EMPTY, EMPTY, EMPTY, EMPTY,
+        EMPTY, EMPTY, EMPTY, EMPTY
+    ],
+    [
+        BLUE, EMPTY, EMPTY, EMPTY,
+        BLUE, EMPTY, EMPTY, EMPTY,
+        BLUE, EMPTY, EMPTY, EMPTY,
+        BLUE, EMPTY, EMPTY, EMPTY
+    ],
+]
+
+yellow = [
+    [
+        YELLOW, YELLOW, YELLOW, EMPTY,
+        YELLOW, YELLOW, YELLOW, EMPTY,
+        YELLOW, YELLOW, YELLOW, EMPTY,
+        EMPTY, EMPTY, EMPTY, EMPTY
+    ],
+]
+
+purple = [
+    [
+        PURPLE, PURPLE, PURPLE, EMPTY,
+        EMPTY, PURPLE, EMPTY, EMPTY,
+        EMPTY, EMPTY, EMPTY, EMPTY,
+        EMPTY, EMPTY, EMPTY, EMPTY
+    ],
+    [
+        PURPLE, EMPTY, EMPTY, EMPTY,
+        PURPLE, PURPLE, EMPTY, EMPTY,
+        PURPLE, EMPTY, EMPTY, EMPTY,
+        EMPTY, EMPTY, EMPTY, EMPTY
+    ],
+    [
+        EMPTY, EMPTY, EMPTY, EMPTY,
+        EMPTY, PURPLE, EMPTY, EMPTY,
+        PURPLE, PURPLE, PURPLE, EMPTY,
+        EMPTY, EMPTY, EMPTY, EMPTY
+    ],
+    [
+        EMPTY, EMPTY, PURPLE, EMPTY,
+        EMPTY, PURPLE, PURPLE, EMPTY,
+        EMPTY, EMPTY, PURPLE, EMPTY,
+        EMPTY, EMPTY, EMPTY, EMPTY
+    ],
+]
+
+orange = [
+    [
+        ORANGE, EMPTY, EMPTY, EMPTY,
+        ORANGE, EMPTY, EMPTY, EMPTY,
+        ORANGE, EMPTY, EMPTY, EMPTY,
+        ORANGE, ORANGE, EMPTY, EMPTY
+    ],
+    [
+        ORANGE, ORANGE, ORANGE, ORANGE,
+        ORANGE, EMPTY, EMPTY, EMPTY,
+        EMPTY, EMPTY, EMPTY, EMPTY,
+        EMPTY, EMPTY, EMPTY, EMPTY
+    ],
+    [
+        EMPTY, EMPTY, ORANGE, ORANGE,
+        EMPTY, EMPTY, EMPTY, ORANGE,
+        EMPTY, EMPTY, EMPTY, ORANGE,
+        EMPTY, EMPTY, EMPTY, ORANGE
+    ],
+    [
+        EMPTY, EMPTY, EMPTY, EMPTY,
+        EMPTY, EMPTY, EMPTY, EMPTY,
+        EMPTY, EMPTY, EMPTY, ORANGE,
+        ORANGE, ORANGE, ORANGE, ORANGE
+    ],
+]
+
+green = [
+    [
+        EMPTY, EMPTY, EMPTY, EMPTY,
+        EMPTY, GREEN, GREEN, EMPTY,
+        GREEN, GREEN, EMPTY, EMPTY,
+        EMPTY, EMPTY, EMPTY, EMPTY
+    ],
+    [
+        EMPTY, EMPTY, EMPTY, EMPTY,
+        EMPTY, GREEN, EMPTY, EMPTY,
+        EMPTY, GREEN, GREEN, EMPTY,
+        EMPTY, EMPTY, GREEN, EMPTY
+    ],
+    [
+        EMPTY, EMPTY, EMPTY, EMPTY,
+        EMPTY, EMPTY, GREEN, EMPTY,
+        EMPTY, GREEN, GREEN, EMPTY,
+        EMPTY, GREEN, EMPTY, EMPTY
+    ],
+    [
+        EMPTY, EMPTY, EMPTY, EMPTY,
+        GREEN, GREEN, EMPTY, EMPTY,
+        EMPTY, GREEN, GREEN, EMPTY,
+        EMPTY, EMPTY, EMPTY, EMPTY
+    ],
+
+]
+
+tetrominos = [
+    blue,
+    yellow,
+    purple,
+    green,
+    orange
+]
