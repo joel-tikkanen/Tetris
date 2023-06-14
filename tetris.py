@@ -17,10 +17,6 @@ def draw_board(s):
             x = 0
 
 
-def lines():
-    pass
-
-
 def user_input():
     global rotation, left_top_pos, direction_x, direction_y
     for event in pg.event.get():
@@ -76,7 +72,6 @@ def to_board_index(ltop):
 
 
 def fit_piece(piece, ltop):
-    global board
     board_index = to_board_index(ltop)
     for x in range(0, 4):
         for y in range(0, 4):
