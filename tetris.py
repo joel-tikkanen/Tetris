@@ -4,89 +4,13 @@ import pygame as pg
 from constants import *
 from random import randint
 from pygame import mixer
-from pygame.locals import *
-
-# Create board with borders
-board = []
-
-for square in range(0, PIXELS):
-    if (square + 1) % 12 == 0:
-        board.append(GREY)
-    elif square % 12 == 0:
-        board.append(GREY)
-    elif square >= PIXELS - BOARD_WIDTH:
-        board.append(GREY)
-    else:
-        board.append(EMPTY)
-
-score = 0
-
-start_pos = int(BOARD_WIDTH // 3), int(BOARD_HEIGHT // 9)
-print(start_pos)
-left_top_pos = start_pos
-game_on = True
-rotation = 0
-screen = pg.display.set_mode(RES)
-clock = pg.time.Clock()
-direction_x = 0
-direction_y = 0
-t_i = 0
-
-pg.display.set_caption("Tetris")
-mixer.init()
-mixer.music.load('Original Tetris theme (Tetris Soundtrack).mp3')
-mixer.music.play(loops=-1)
 
 
-def run():
-    global game_on, score, left_top_pos, direction_x, direction_y, rotation, t_i
-    k = 0
-    pg.init()
-
-    tetromino = tetrominos[0][0]
-    t_i = 0
-
-    while game_on:
-        pg.display.flip()
-        clock.tick(FPS)
-        screen.fill(EMPTY)
-        draw_board()
-        draw_score()
-        new_pos = left_top_pos
-
-        tetromino = tetrominos[t_i][rotation]
-        if not can_fit((new_pos[0], new_pos[1] + 1), tetromino, 2):
-            fit_piece(tetromino, left_top_pos)
-            if left_top_pos[1] < 5:
-                print("END")
-                break
-            left_top_pos = start_pos
-            r = randint(0, 4)
-            rotation = 0
-            tetromino = tetrominos[r][rotation]
-            t_i = r
-            continue
-        elif k == 10:
-            k = 0
-            left_top_pos = left_top_pos[0], left_top_pos[1] + 1
-
-        new_pos = left_top_pos[0] + direction_x, left_top_pos[1] + direction_y
-        if can_fit(new_pos, tetromino, 2):
-            left_top_pos = new_pos
-
-        k += 1
-        direction_x = 0
-        direction_y = 0
-        draw_tetromino(left_top_pos, tetromino)
-        delete_rows(check_rows())
-        user_input()
-
-
-def draw_board():
+def draw_board(s):
     x, y = 0, 0
     for square_index in range(0, len(board)):
-        pg.draw.rect(screen, board[square_index], pg.Rect((x, y), SQUARE_SIZE))
-        pg.draw.rect(screen, EMPTY, pg.Rect((x, y), SQUARE_SIZE), 1)
+        pg.draw.rect(s, board[square_index], pg.Rect((x, y), SQUARE_SIZE))
+        pg.draw.rect(s, EMPTY, pg.Rect((x, y), SQUARE_SIZE), 1)
         x += SQUARE_SIDE
         if (square_index + 1) % 12 == 0 and square_index != 0:
             y += SQUARE_SIDE
@@ -135,13 +59,13 @@ def draw_tetromino(ltop, tetromino):
                              pg.Rect((SCALE * px + y * SQUARE_SIDE, SCALE * py + x * SQUARE_SIDE), SQUARE_SIZE), 1)
 
 
-def can_fit(ltop, tetromino, rotation_n):
+def can_fit(ltop, t):
     i = to_board_index(ltop)
     for x in range(0, 4):
         for y in range(0, 4):
             ind = i + x * BOARD_WIDTH + y
             if ind < len(board):
-                if board[ind] != EMPTY and tetromino[x * 4 + y] != EMPTY:
+                if board[ind] != EMPTY and t[x * 4 + y] != EMPTY:
                     return False
     return True
 
@@ -172,33 +96,102 @@ def check_rows():
 
 
 def delete_rows(rows):
-    global score
-    s = 0
     for row in rows:
         for i in range(1, BOARD_WIDTH - 1):
             board[row * BOARD_WIDTH + i] = EMPTY
-        move_down()
-        s += 1
-    score += s ** 2 * 100
+        move_down(row)
+    return len(rows) ** 2 * 100
 
 
-def move_down():
-    for i in range(BOARD_WIDTH, len(board) - BOARD_WIDTH):
-        j = len(board) - i
-        k = j - BOARD_WIDTH
-        board[j] = board[k]
+def move_down(row):
+    for i in range(BOARD_WIDTH, len(board) - BOARD_WIDTH - (len(board)-row*BOARD_WIDTH)):
+        i1 = len(board) - i
+        i2 = i1 - BOARD_WIDTH
+        board[i1] = board[i2]
 
 
 def rotate(ltop, index, r_number):
     t = tetrominos[index][r_number]
-    if can_fit(ltop, t, r_number):
+    if can_fit(ltop, t):
         return True
     return False
 
 
-def draw_score():
+def draw_score(s):
     font = pg.font.Font('freesansbold.ttf', 15)
     text = font.render(f"score: {score}", True, (255, 255, 255), (0, 0, 0))
     text_rect = text.get_rect()
     text_rect.center = (180, 40)
-    screen.blit(text, text_rect)
+    s.blit(text, text_rect)
+
+
+start_pos = int(BOARD_WIDTH // 3), int(BOARD_HEIGHT // 9)
+
+left_top_pos = start_pos
+
+rotation = 0
+direction_x = 0
+direction_y = 0
+t_i = 0
+k = 0
+
+tetromino = tetrominos[0][0]
+
+game_on = True
+score = 0
+
+pg.display.set_caption("Tetris")
+screen = pg.display.set_mode(RES)
+clock = pg.time.Clock()
+mixer.init()
+mixer.music.load('Original Tetris theme (Tetris Soundtrack).mp3')
+mixer.music.play(loops=-1)
+pg.init()
+
+# Create board with borders
+board = []
+
+for square in range(0, PIXELS):
+    if (square + 1) % 12 == 0:
+        board.append(GREY)
+    elif square % 12 == 0:
+        board.append(GREY)
+    elif square >= PIXELS - BOARD_WIDTH:
+        board.append(GREY)
+    else:
+        board.append(EMPTY)
+
+while game_on:
+    pg.display.flip()
+    clock.tick(FPS)
+    screen.fill(EMPTY)
+    draw_board(screen)
+    draw_score(screen)
+    new_pos = left_top_pos
+
+    tetromino = tetrominos[t_i][rotation]
+
+    if not can_fit((new_pos[0], new_pos[1] + 1), tetromino):
+        fit_piece(tetromino, left_top_pos)
+        if left_top_pos[1] < 5:
+            game_on = False
+        left_top_pos = start_pos
+        r = randint(0, 4)
+        rotation = 0
+        tetromino = tetrominos[r][rotation]
+        t_i = r
+        continue
+    elif k == 10:
+        k = 0
+        left_top_pos = left_top_pos[0], left_top_pos[1] + 1
+
+    new_pos = left_top_pos[0] + direction_x, left_top_pos[1] + direction_y
+    if can_fit(new_pos, tetromino):
+        left_top_pos = new_pos
+
+    k += 1
+    direction_x = 0
+    direction_y = 0
+    draw_tetromino(left_top_pos, tetromino)
+    score += delete_rows(check_rows())
+    user_input()
