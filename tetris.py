@@ -47,12 +47,12 @@ def user_input():
             direction_y = 1
 
 
-def draw_tetromino(ltop, tetromino):
+def draw_tetromino(ltop, t):
     px, py = ltop
     for x in range(0, 4):
         for y in range(0, 4):
-            if tetromino[x * 4 + y] != EMPTY:
-                pg.draw.rect(screen, tetromino[x * 4 + y],
+            if t[x * 4 + y] != EMPTY:
+                pg.draw.rect(screen, t[x * 4 + y],
                              pg.Rect((SCALE * px + y * SQUARE_SIDE, SCALE * py + x * SQUARE_SIDE), SQUARE_SIZE))
                 # Border
                 pg.draw.rect(screen, EMPTY,
@@ -99,13 +99,14 @@ def delete_rows(rows):
     for row in rows:
         for i in range(1, BOARD_WIDTH - 1):
             board[row * BOARD_WIDTH + i] = EMPTY
+    for row in rows:
         move_down(row)
     return len(rows) ** 2 * 100
 
 
 def move_down(row):
-    for i in range(BOARD_WIDTH, len(board) - BOARD_WIDTH - (len(board)-row*BOARD_WIDTH)):
-        i1 = len(board) - i
+    for i in range(row * BOARD_WIDTH + BOARD_WIDTH, BOARD_WIDTH, -1):
+        i1 = i
         i2 = i1 - BOARD_WIDTH
         board[i1] = board[i2]
 
@@ -168,7 +169,6 @@ while game_on:
     draw_board(screen)
     draw_score(screen)
     new_pos = left_top_pos
-
     tetromino = tetrominos[t_i][rotation]
 
     if not can_fit((new_pos[0], new_pos[1] + 1), tetromino):

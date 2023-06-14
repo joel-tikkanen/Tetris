@@ -32,9 +32,9 @@ blue = [
 
 yellow = [
     [
-        YELLOW, YELLOW, YELLOW, EMPTY,
-        YELLOW, YELLOW, YELLOW, EMPTY,
-        YELLOW, YELLOW, YELLOW, EMPTY,
+        EMPTY, EMPTY, EMPTY, EMPTY,
+        YELLOW, YELLOW, EMPTY, EMPTY,
+        YELLOW, YELLOW, EMPTY, EMPTY,
         EMPTY, EMPTY, EMPTY, EMPTY
     ],
 ]
@@ -105,20 +105,7 @@ green = [
         EMPTY, GREEN, EMPTY, EMPTY,
         EMPTY, GREEN, GREEN, EMPTY,
         EMPTY, EMPTY, GREEN, EMPTY
-    ],
-    [
-        EMPTY, EMPTY, EMPTY, EMPTY,
-        EMPTY, EMPTY, GREEN, EMPTY,
-        EMPTY, GREEN, GREEN, EMPTY,
-        EMPTY, GREEN, EMPTY, EMPTY
-    ],
-    [
-        EMPTY, EMPTY, EMPTY, EMPTY,
-        GREEN, GREEN, EMPTY, EMPTY,
-        EMPTY, GREEN, GREEN, EMPTY,
-        EMPTY, EMPTY, EMPTY, EMPTY
-    ],
-
+    ]
 ]
 
 tetrominos = [
