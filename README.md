@@ -11,4 +11,6 @@ Move right - d
 
 Window closes on when the game is over.
 
+<br>
 
+![Gameplay](picture.png)
